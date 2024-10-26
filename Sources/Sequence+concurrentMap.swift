@@ -1,6 +1,6 @@
-extension Sequence {
-    func concurrentMap<T>(
-        _ transform: @escaping (Element) async throws -> T,
+extension Sequence where Element: Sendable {
+    func concurrentMap<T: Sendable>(
+        _ transform: @escaping @Sendable (Element) async throws -> T,
         priority: TaskPriority? = nil
     ) async rethrows -> [T] {
         let tasks = map { element in

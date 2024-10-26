@@ -1,5 +1,5 @@
 extension Sequence {
-    func asyncMap<T>(
+    func asyncMap<T: Sendable>(
         _ transform: (Element) async throws -> T
     ) async rethrows -> [T] {
         var values = [T]()

@@ -1,7 +1,7 @@
-extension Sequence {
-    func concurrentReduce<Result>(
+extension Sequence where Element: Sendable {
+    func concurrentReduce<Result: Sendable>(
         _ initialResult: Result,
-        _ nextPartialResult: @escaping (Result, Element) async throws -> Result,
+        _ nextPartialResult: @escaping @Sendable (Result, Element) async throws -> Result,
         priority: TaskPriority? = nil
     ) async rethrows -> Result {
         let tasks = map { element in

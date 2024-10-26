@@ -1,6 +1,6 @@
-extension Sequence {
+extension Sequence where Element: Sendable {
     func concurrentFilter(
-        _ isIncluded: @escaping (Element) async throws -> Bool,
+        _ isIncluded: @escaping @Sendable (Element) async throws -> Bool,
         priority: TaskPriority? = nil
     ) async rethrows -> [Element] {
         return try await withThrowingTaskGroup(of: (Element, Bool).self) { group in
